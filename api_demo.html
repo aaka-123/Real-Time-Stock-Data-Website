@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Real-time Stock Market Data</title>
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Open</th>
+          <th>High</th>
+          <th>Low</th>
+          <th>Close</th>
+          <th>Volume</th>
+        </tr>
+      </thead>
+      <tbody id="stock-data">
+      </tbody>
+    </table>
+
+    <script>
+      const apiKey = 'YLDIUB2XA5L83L4H';
+      const symbol = 'IBM';
+      const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${symbol}&apikey=${apiKey}`;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          const stockData = data['Time Series (Daily)'];
+          const tbody = document.getElementById('stock-data');
+
+          for (const date in stockData) {
+            const row = tbody.insertRow();
+            const dateCell = row.insertCell();
+            const openCell = row.insertCell();
+            const highCell = row.insertCell();
+            const lowCell = row.insertCell();
+            const closeCell = row.insertCell();
+            const volumeCell = row.insertCell();
+            dateCell.innerText = date;
+
+            openCell.innerText = stockData[date]['1. open'];
+            highCell.innerText = stockData[date]['2. high'];
+            lowCell.innerText = stockData[date]['3. low'];
+            closeCell.innerText = stockData[date]['4. close'];
+            volumeCell.innerText = stockData[date]['6. volume'];
+
+            row.insertAdjacentElement('beforeend', volumeCell);
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    </script>
+  </body>
+</html>
