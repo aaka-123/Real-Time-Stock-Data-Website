@@ -1,4 +1,4 @@
-var api = "demo"; // get your own api (https://www.alphavantage.co/support/#api-key)
+
 var dps = [];
 var company = null;
 var symbol = null;
@@ -6,10 +6,76 @@ var chart = null;
 var columns = ["Date", "Open", "High", "Low", "Close", "Adjusted Close", "Volume"];
 var data1 = []
 
-function download(){
-  window.location = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol="+symbol+"&apikey="+api+"&datatype=csv";
+
+
+
+var api = "YLDIUB2XA5L83L4H";
+// https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=IBM&outputsize=full&apikey=YLDIUB2XA5L83L4H
+// https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=TSCO.LON&outputsize=full&apikey=demo
+
+
+
+const chartProperties = {
+  width: 1500,
+  height: 300,
+  timeScale: {
+    timeVisible: true,
+    secondsVisible: false,
+  },
+  options: {
+    scales: {
+      y: {
+        ticks: {
+          display: false
+        }
+      },
+      x: {
+        ticks: {
+          display: false
+        }
+      }
+    }
+  },  borderWidth: 0,  borderColor: 'rgba(255, 255, 255, 0)',
 }
 
+const domElement = document.getElementById('tvchart');
+const c_chart = LightweightCharts.createChart(domElement, chartProperties);
+const candleSeries = c_chart.addCandlestickSeries();
+
+
+function download(){
+  window.location = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol="+symbol+"&outputsize=full&apikey="+api+"&datatype=csv";
+}
+function candleStick(){
+  fetch("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=" + symbol + "&outputsize=full&apikey=" + api)
+  .then(res => res.json())
+  .then(data => {
+    const timeSeries = data['Time Series (Daily)'];
+    const cdata = Object.keys(timeSeries).map(key => {
+        
+      const d = timeSeries[key];
+    //   console.log(d);
+      return {
+        time: new Date(key).getTime() / 1000,
+        open: parseFloat(d['1. open']),
+        high: parseFloat(d['2. high']),
+        low: parseFloat(d['3. low']),
+        close: parseFloat(d['4. close']),
+      };
+    });
+    const sortedData = cdata.sort((a, b) => a.time - b.time);
+    console.log(sortedData);
+    candleSeries.setData(sortedData);
+    
+    
+    candleSeries.setData(cdata);
+  })
+  .catch(err => log(err));
+
+
+
+
+}
 function getting_data(){
   if(company !== null){
     $.getJSON("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol="+symbol+"&outputsize=full&apikey="+api)
@@ -37,6 +103,9 @@ function getting_data(){
       document.getElementById("companies").disabled = false;
       document.getElementById("get_data").disabled = false;
       document.getElementById("chartContainer").disabled = false;
+      
+      candleStick();
+     
     })
     .fail(function(textStatus, error){
       alert(textStatus+" "+error+"\nReload the page");
@@ -84,6 +153,7 @@ function getData(){
   document.getElementById("companies").disabled = true;
   document.getElementById("get_data").disabled = true;
   document.getElementById("chartContainer").disabled = true;
+  // document.getElementById("tvchart").style.display =" ";
   getting_data();
 }
 
