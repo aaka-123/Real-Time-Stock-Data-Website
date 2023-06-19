@@ -8,35 +8,43 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#"><b>Data</b></a>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item active" style="margin-left: 50px;">
-            <a class="nav-link" href="#">Stock Time Series</a>
-          </li>
-         
-        </ul>
-      </div>
-    </nav>
+   
+    <header class="header ">
+      <a href="./index.html" class="logo  " ><img src="logo.png" height="70" width="70"></img></a>
+      <i class="bx bx-menu" id="menu-icon"></i>
+
+      <nav class="navbar">
+          <a href="#home" class="active">Home</a>
+          <a href="#about">About</a>
+          <a href="#services">News</a>
+          <a href="#portfolio" >Portfolio</a>
+          <a href="#contact" >Contact</a>
+      </nav>
+  </header>
     <div id="loading_container">
       <h6 style="margin-left: 11%;">Loading data.....</h6>
       <progress></progress>
     </div>
     <div id="company_container">
       <select id="companies" class="btn btn-light" name="companies">
-        <option value="Apple Inc(AAPL)">Apple Inc(AAPL)</option>
+        <option value="Tesco PLC(TSCO.LON)">Tesco PLC</option>
         <option value="Microsoft Corp(MSFT)">Microsoft Corp(MSFT)</option>
         <option value="International Business Machine(IBM)">International Business Machine(IBM)</option>
+        <option value="Shopify Inc(SHOP.TRT)">Shopify Inc(SHOP.TRT)</option>
+        <option value="GreenPower Motor Company Inc(GPV.TRV)">GreenPower Motor Company Inc(GPV.TRV)</option>
+        <option value="Daimler AG (DAI.DEX)">Daimler AG (DAI.DEX)</option>
       </select>
       <button id="get_data" onclick="getData()" class="btn btn-primary" style="margin-left: 5%;">Get Data</button>
     </div>
     <button id="download_data" onclick="download()" class="btn btn-success">Download Data(CSV)</button>
     <div id="chartContainer"></div>
     <div id="table_container"></div>
+
+    <div id="tvchart"></div>
   </body>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
   <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
   <script src="index.js"></script>
 
