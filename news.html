@@ -1,0 +1,101 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Real-time Stock Market Data</title>
+  </head>
+  <link rel="stylesheet" href="./news.css">
+  <body>
+  
+
+    <h2 class="heading">Latest <span>News</span></h2>
+    <div id="news-container"></div>
+
+    <script>
+      const apiKey = '5496853c2c9e4bdb905d345ff137b841';
+      
+      const url = "https://newsapi.org/v2/everything?q=finance&from=2023-06-18&to=2023-06-18&sortBy=popularity&apiKey=5496853c2c9e4bdb905d345ff137b841";
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          const articles = data['articles'];
+          const container = document.getElementById('news-container');
+
+          // create a div element for each article
+          articles.forEach(article => {
+            const div = document.createElement('div');
+            div.classList.add('article');
+
+            // create and add the necessary HTML elements and content to the div
+            const titleElement = document.createElement('h3');
+            titleElement.textContent = article.title;
+            div.appendChild(titleElement);
+
+            const authorElement = document.createElement('p');
+            authorElement.textContent = 'By ' + article.author;
+            div.appendChild(authorElement);
+
+            const descriptionElement = document.createElement('p');
+            descriptionElement.textContent = article.description;
+            div.appendChild(descriptionElement);
+
+            
+
+            const imageElement = document.createElement('img');
+            imageElement.src = article.urlToImage;
+            div.appendChild(imageElement);
+
+            const urlElement = document.createElement('a');
+            urlElement.textContent = article.url;
+            urlElement.href = article.url;
+            div.appendChild(urlElement);
+
+            const publishedAtElement = document.createElement('p');
+            publishedAtElement.textContent = article.publishedAt;
+            div.appendChild(publishedAtElement);
+
+            const contentElement = document.createElement('p');
+            contentElement.textContent = article.content;
+            div.appendChild(contentElement);
+
+            // add the div to the container
+            container.appendChild(div);
+          });
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    </script>
+
+    <style>
+      .article {
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .article h3 {
+        margin-top: 0;
+        color:#0ef;
+        font-size: 2rem;
+        max-width:50%;
+      }
+
+      .article img {
+        max-width: 50%;
+        height: auto;
+        margin-bottom: 60px;
+      }
+       .article p{
+        max-width:50%;
+        
+      }
+      a{
+        margin-left:-740px;
+      }
+    </style>
+  </body>
+</html>

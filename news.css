@@ -1,0 +1,30 @@
+
+:root
+       {
+     --bg-color:#1f242d;
+    --second-bg-color:#323946;
+     --text-color: #fff;
+     --main-color: #0ef;
+       }
+body{
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+.heading {
+    text-align: center;
+    font-size: 4.5rem;
+    
+    }
+    span{
+        color:var(--main-color);
+    }
+
+   /* img{
+        width:500px;
+        height:10000px;
+        margin-bottom:76px;
+    } */
+    px{
+        color:var(--main-color);
+    }
