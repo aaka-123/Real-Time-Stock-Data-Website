@@ -16,9 +16,12 @@
       <nav class="navbar">
           <a href="#home" class="active">Home</a>
           <a href="#about">About</a>
-          <a href="#services">News</a>
+          <a href="./news.html">News</a>
           <a href="#portfolio" >Portfolio</a>
-          <a href="#contact" >Contact</a>
+        </div>
+        <a href="#signup" class="btn1">Sign Up</a>
+        </div>
+          
       </nav>
   </header>
     <div id="loading_container">
@@ -34,13 +37,15 @@
         <option value="GreenPower Motor Company Inc(GPV.TRV)">GreenPower Motor Company Inc(GPV.TRV)</option>
         <option value="Daimler AG (DAI.DEX)">Daimler AG (DAI.DEX)</option>
       </select>
-      <button id="get_data" onclick="getData()" class="btn btn-primary" style="margin-left: 5%;">Get Data</button>
+      <button id="get_data" onclick="getData()" class="btn1 btn-primary" style="margin-left: 5%;">Get Data</button>
     </div>
     <button id="download_data" onclick="download()" class="btn btn-success">Download Data(CSV)</button>
     <div id="chartContainer"></div>
-    <div id="table_container"></div>
-
-    <div id="tvchart"></div>
+    <div id="table_container" ></div>
+    <div class="chart-container">
+      <div id="tvchart"></div>
+    </div>
+   
   </body>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

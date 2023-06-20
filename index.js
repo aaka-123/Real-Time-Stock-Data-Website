@@ -9,6 +9,8 @@ var data1 = []
 
 
 
+
+
 var api = "YLDIUB2XA5L83L4H";
 // https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=IBM&outputsize=full&apikey=YLDIUB2XA5L83L4H
 // https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=TSCO.LON&outputsize=full&apikey=demo
@@ -16,37 +18,27 @@ var api = "YLDIUB2XA5L83L4H";
 
 
 const chartProperties = {
-  width: 1500,
-  height: 300,
+  width: 1400,
+  height: 400,
   timeScale: {
     timeVisible: true,
     secondsVisible: false,
   },
-  options: {
-    scales: {
-      y: {
-        ticks: {
-          display: false
-        }
-      },
-      x: {
-        ticks: {
-          display: false
-        }
-      }
-    }
-  },  borderWidth: 0,  borderColor: 'rgba(255, 255, 255, 0)',
+  layout:{
+    right:500,
+  },
+ 
 }
-
-const domElement = document.getElementById('tvchart');
-const c_chart = LightweightCharts.createChart(domElement, chartProperties);
-const candleSeries = c_chart.addCandlestickSeries();
 
 
 function download(){
   window.location = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol="+symbol+"&outputsize=full&apikey="+api+"&datatype=csv";
 }
 function candleStick(){
+
+const domElement = document.getElementById('tvchart');
+const c_chart = LightweightCharts.createChart(domElement, chartProperties);
+const candleSeries = c_chart.addCandlestickSeries();
   fetch("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=" + symbol + "&outputsize=full&apikey=" + api)
   .then(res => res.json())
   .then(data => {
@@ -70,7 +62,7 @@ function candleStick(){
     
     candleSeries.setData(cdata);
   })
-  .catch(err => log(err));
+  .catch(err => console.log(err));
 
 
 
@@ -99,6 +91,10 @@ function getting_data(){
       graph();
       drawTable();
       document.getElementById("loading_container").style.display = "none";
+      var div = document.querySelector('#table_container');
+div.classList.remove('hidden');
+div.classList.add('visible');
+      
       document.getElementById("download_data").style.display = "block";
       document.getElementById("companies").disabled = false;
       document.getElementById("get_data").disabled = false;
@@ -112,6 +108,7 @@ function getting_data(){
     })
   }
 }
+
 
 function graph(){
   chart = new CanvasJS.Chart("chartContainer", {
@@ -144,7 +141,7 @@ function getData(){
   }
   data1 = [];
   dps = [];
-  document.getElementById("table_container").innerHTML = "";
+  
   company = document.getElementById("companies").value;
   let r = company.split("(");
   symbol = r[1].substring(0, r[1].length-1);
@@ -157,33 +154,69 @@ function getData(){
   getting_data();
 }
 
-function drawTable(){
+// function drawTable(){
+//   var table_container = document.getElementById("table_container");
+//   var para = document.createElement("p");
+//   para.id = "para";
+//   var cell = document.createTextNode("RECENT END OF DAY PRICES");
+//   para.appendChild(cell);
+//   table_container.appendChild(para);
+//   var table = document.createElement("table");
+//   table.className = "table";
+//   var row = document.createElement("tr");
+//   for(let i=0;i<columns.length;i++){
+//     var col = document.createElement("th");
+//     col.scope = "col";
+//     cell = document.createTextNode(columns[i]);
+//     col.appendChild(cell);
+//     row.appendChild(col);
+//   }
+//   table.appendChild(row);
+//   for(let i=0;i<7;i++){
+//     row = document.createElement("tr");
+//     for(let j=0;j<7;j++){
+//       col = document.createElement("td");
+//       cell = document.createTextNode(data1[i][j]);
+//       col.appendChild(cell);
+//       row.appendChild(col);
+//     }
+//     table.appendChild(row);
+//   }
+//   table_container.appendChild(table);
+// }
+
+function drawTable() {
   var table_container = document.getElementById("table_container");
-  var para = document.createElement("p");
-  para.id = "para";
-  var cell = document.createTextNode("RECENT END OF DAY PRICES");
-  para.appendChild(cell);
-  table_container.appendChild(para);
+
+  // create heading element
+  var heading = document.createElement("h2");
+  heading.textContent = "Recent End of Day Prices";
+  table_container.appendChild(heading);
+
+  // create table element
   var table = document.createElement("table");
-  table.className = "table";
-  var row = document.createElement("tr");
-  for(let i=0;i<columns.length;i++){
-    var col = document.createElement("th");
-    col.scope = "col";
-    cell = document.createTextNode(columns[i]);
-    col.appendChild(cell);
-    row.appendChild(col);
+  table.classList.add("table");
+
+  // create table header row
+  var header_row = document.createElement("tr");
+  for (let i = 0; i < columns.length; i++) {
+    var header_cell = document.createElement("th");
+    header_cell.textContent = columns[i];
+    header_row.appendChild(header_cell);
   }
-  table.appendChild(row);
-  for(let i=0;i<7;i++){
-    row = document.createElement("tr");
-    for(let j=0;j<7;j++){
-      col = document.createElement("td");
-      cell = document.createTextNode(data1[i][j]);
-      col.appendChild(cell);
-      row.appendChild(col);
+  table.appendChild(header_row);
+
+  // create table data rows
+  for (let i = 0; i < data1.length; i++) {
+    var data_row = document.createElement("tr");
+    for (let j = 0; j < data1[i].length; j++) {
+      var data_cell = document.createElement("td");
+      data_cell.textContent = data1[i][j];
+      data_row.appendChild(data_cell);
     }
-    table.appendChild(row);
+    table.appendChild(data_row);
   }
+
+  // add table to container
   table_container.appendChild(table);
 }

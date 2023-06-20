@@ -8,8 +8,38 @@
   font-family: 'Poppins', sans-serif;
   /* background-color: #323946; */
 }
+#tvchart{
+   margin-top:200px;
+   margin-bottom:100px;
+}
 body {
+  background-color: #323946;
+}
+#table_container {
+  padding: 20px;
   background-color: #f2f2f2;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.th {
+  background-color: #ddd;
+  font-weight: bold;
+  text-align: left;
+}
+
+.td {
+  padding: 8px;
+  border: 1px solid #ddd;
 }
 :root
     {
@@ -64,12 +94,35 @@ body {
 color: var(--main-color) ;
 }
     
-
+.chart-container {
+  margin-left: 60px; /* set the left margin to 100 pixels */
+  margin-right:100px;
+}
 #company_container{
   margin-top: 300px;
   margin-left: 32%;
   margin-right: auto;
 }
+.btn1{
+  color: #0f1011 !important;
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  background: var(--main-color);
+  border-radius: 4rem;
+  box-shadow: 0 0 1rem var(--main-color);
+  font-size: 1.6rem;
+
+  letter-spacing: .1rem;
+  font-weight: 600;
+  transition: .5s ease;
+}
+  
+  .btn1:hover{
+    box-shadow:none;
+    /* color:black; */
+  
+ }
+ 
 
 #chartContainer{
   height: 300px; 
@@ -80,10 +133,11 @@ color: var(--main-color) ;
 }
 
 #table_container{
-  margin-left: 30px;
+  margin-left: 120px;
   margin-top: 5%;
-  width: 100%;
-  margin-right: 20px;
+  width: 80%;
+  margin-right: 100px;
+  visibility: hidden;
 }
 
 #para{
